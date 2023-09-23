@@ -4,14 +4,15 @@
 
 
 from django.urls import path ,include
-from apis.views import TestViewSet
-from rest_framework import routers
+from apis.views import UserRegisterView,UserPasswordResetView,UserLoginView,UserProfileView,UserChangePasswordView ,UserSendResetPasswoedemailView
 
-router = routers.DefaultRouter()
-
-router.register(r"testapi" ,TestViewSet , basename='testapi')
 
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('register/', UserRegisterView.as_view(), name='register',),
+    path('login/', UserLoginView.as_view(), name='login',),
+    path('profile/', UserProfileView.as_view(), name='profile',),
+    path('changepassword/', UserChangePasswordView.as_view(), name='changepassword',),
+    path('password-reset-email/', UserSendResetPasswoedemailView.as_view(), name='send-email',),
+    path('reset-password/<uid>/<token>', UserPasswordResetView.as_view(), name='reset-password',),
 ]

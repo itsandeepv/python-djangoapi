@@ -3,21 +3,6 @@ from django.contrib.auth.models import  BaseUserManager, AbstractBaseUser
 
 # Create your models here.
 
-class TestApi(models.Model):
-    user_id = models.AutoField(primary_key=True)
-    fname = models.CharField(max_length=100)
-    lname = models.CharField(max_length=100)
-    email = models.EmailField(max_length=30)
-    mobileNumber = models.CharField(max_length=30,default="")
-    password = models.CharField(max_length=30)
-    added_data = models.DateTimeField(auto_now=True)
-    isActive = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.fname
-
-
-
 
 class NewUserManager(BaseUserManager):
     def create_user(self, email, fname ,lname,tc,mobileNumber, password=None ,password2=None):
@@ -71,6 +56,7 @@ class NewUser(AbstractBaseUser):
     mobileNumber = models.CharField(verbose_name='Mobile Number',max_length=30 ,default="")
     tc = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
+    social_login = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)

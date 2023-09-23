@@ -9,9 +9,13 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+# import os
 from pathlib import Path
 from datetime import timedelta
+import pymysql
+
+pymysql.version_info = (1,4,6 ,'final' , 0)
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,12 +88,32 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+} 
+# this is default database in python 
+
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": "lcschatapp",
+#         "USER": "root",
+#         "PASSWORD": "admin",
+#         "HOST": "127.0.0.1",
+#         "PORT": "3306",
+#     }
+# }
+
+
+
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer'
+    # ]
 }
 
 # Password validation
@@ -136,6 +160,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL ="apis.NewUser"
 
 
+# Email Configuration
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "itsdevelopertools@gmail.com"
+EMAIL_HOST_PASSWORD = "itsdevelopertools@786"
+EMAIL_USE_TLS = True
+
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=400),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
@@ -147,6 +180,8 @@ SIMPLE_JWT = {
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
     "TOKEN_TYPE_CLAIM": "token_type",
 }
+
+PASSWORD_RESET_TIMEOUT= 900  # 900 Sec = 15 Min
 
 
 CORS_ALLOWED_ORIGINS = [
